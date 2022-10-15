@@ -6,10 +6,10 @@ export const validateCreateVideosMiddleWare = (req: Request, res: Response, next
         !body.author.trim() || body.author.length > 20 ||
         !body.availableResolutions) {
         res.status(400).send({
-            "errorsMessages": [
+            errorsMessages: [
                 {
-                    "message": "string",
-                    "field": "string",
+                    message: "string",
+                    field: "string",
                 }
             ]
         })
@@ -29,10 +29,10 @@ export const validateUpdateVideosMiddleWare = (req: Request<VideoUpdateIdModels,
         typeof (body.minAgeRestriction) !== 'number' || body.minAgeRestriction < 1 || body.minAgeRestriction > 18 ||
         typeof (body.publicationDate) !== 'string') {
         res.status(400).send({
-            "errorsMessages": [
+            errorsMessages: [
                 {
-                    "message": "string",
-                    "field": "string",
+                    message: "string",
+                    field: "string",
                 }
             ]
         })

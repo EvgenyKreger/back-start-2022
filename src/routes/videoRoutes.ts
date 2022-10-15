@@ -56,7 +56,7 @@ videoRoutes.put('/:id', validateUpdateVideosMiddleWare, (req: RequestWithParamsA
             needId.canBeDownloaded = req.body.canBeDownloaded
             needId.minAgeRestriction = req.body.minAgeRestriction
             needId.publicationDate = req.body.publicationDate
-        res.status(204).send('No Content')
+        res.status(204).end()
     }
 
 })
