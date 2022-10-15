@@ -1,12 +1,11 @@
 import bodyParser from "body-parser";
-import {fruitsRouter} from "./routes/fruitsRouter";
+import {videoRoutes} from "./routes/videoRoutes";
 
-const port = process.env.PORT || 3000
 const express = require('express')
 const app = express()
+const port = process.env.PORT || 3000
 app.use(bodyParser())
-
-app.use('/fruits', fruitsRouter)
-app.listen(port,()=>{
-    console.log(`Port: ${port} is working !!!`)
+app.use('/videos', videoRoutes)
+app.listen(port, () => {
+    console.log(`Port ${port} is working good !!!`)
 })
