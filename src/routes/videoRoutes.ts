@@ -17,6 +17,17 @@ videoRoutes.get('/', (req: Request, res: Response<VideoModels[]>) => {
     if (videos)
         res.send(videos);
 })
+videoRoutes.get('/:id', (req: RequestWithParams<VideoUpdateIdModels>, res: Response<VideoModels>) => {
+    const idFind = +req.params.id
+    const needId = videos.find(el => el.id === idFind)
+    if(!needId){
+        res.status(404).end()
+        return
+    }
+    if (needId) {
+        res.send(needId)
+    }
+})
 videoRoutes.post('/', validateCreateVideosMiddleWare, (req: RequestWithBody<VideoCreateModel>, res: Response<VideoModels | {}>) => {
     const createObj: VideoModels = {
         id: +new Date(),
