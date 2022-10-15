@@ -8,7 +8,8 @@ import {
 
 export let videos: VideoModels[] = []
 export const videoRoutes = Router()
-videoRoutes.delete('/', (req: Request, res: Response) => {
+export const videoDeleteAllRoutes = Router()
+videoDeleteAllRoutes.delete('/', (req: Request, res: Response) => {
     videos = []
     res.status(204).end()
 })
@@ -30,8 +31,6 @@ videoRoutes.post('/', validateCreateVideosMiddleWare, (req: RequestWithBody<Vide
     if (createObj)
         videos.push(createObj)
     res.status(201).send(createObj)
-    // }
-
 })
 videoRoutes.put('/:id', validateUpdateVideosMiddleWare, (req: RequestWithParamsAndBody<VideoUpdateIdModels, VideoUpdateModel>, res: Response<never | {}>) => {
     const idFind = +req.params.id
