@@ -64,7 +64,7 @@ export const validateUpdateVideosMiddleWare = (req: Request<VideoUpdateIdModels,
             field: "publicationDate",
         })
     }
-    if ( !body.minAgeRestrictiotypeof || (body.minAgeRestriction) !== 'number' || body.minAgeRestriction < 1 || body.minAgeRestriction > 18) {
+    if ( !body.minAgeRestriction || typeof (body.minAgeRestriction) !== 'number' || body.minAgeRestriction < 1 || body.minAgeRestriction > 18) {
         messages.push( {
             message: "min 1 max 18",
             field: "minAgeRestriction",

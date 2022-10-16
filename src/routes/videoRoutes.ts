@@ -36,8 +36,8 @@ videoRoutes.post('/', validateCreateVideosMiddleWare, (req: RequestWithBody<Vide
         id: +new Date(),
         title: req.body.title,
         author: req.body.author,
-        canBeDownloaded: true,
-        minAgeRestriction: 18,
+        canBeDownloaded: false,
+        minAgeRestriction: null,
         createdAt: new Date().toISOString(),
         publicationDate: rightDataPlusOneDay,
         availableResolutions: req.body.availableResolutions
