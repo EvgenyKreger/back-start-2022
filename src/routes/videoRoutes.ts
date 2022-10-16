@@ -29,6 +29,9 @@ videoRoutes.get('/:id', (req: RequestWithParams<VideoUpdateIdModels>, res: Respo
     }
 })
 videoRoutes.post('/', validateCreateVideosMiddleWare, (req: RequestWithBody<VideoCreateModel>, res: Response<VideoModels | {}>) => {
+    // const currentTime = new Date();
+    // const currentDataPlusOneDay = currentTime.setDate(currentTime.getDate() + 1);
+    // const rightDataPlusOneDay = currentTime.toISOString();
     const createObj: VideoModels = {
         id: +new Date(),
         title: req.body.title,
@@ -36,7 +39,7 @@ videoRoutes.post('/', validateCreateVideosMiddleWare, (req: RequestWithBody<Vide
         canBeDownloaded: true,
         minAgeRestriction: 18,
         createdAt: new Date().toISOString(),
-        publicationDate: new Date().toISOString(),
+        publicationDate: new Date().toISOString() + 1,
         availableResolutions: req.body.availableResolutions
     }
     if (createObj)
