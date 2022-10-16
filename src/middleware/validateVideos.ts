@@ -23,7 +23,7 @@ export const validateUpdateVideosMiddleWare = (req: Request<VideoUpdateIdModels,
     const body = req.body
     if (!body.title || !body.title.trim() || body.title.length > 40 || !body.author ||
         !body.author.trim() || body.author.length > 20 || !body.availableResolutions || !body.canBeDownloaded ||
-        body.publicationDate ||
+        !body.publicationDate ||
         body.availableResolutions.length === 0 || !body.canBeDownloaded || typeof (body.canBeDownloaded) !== 'boolean' ||
         typeof (body.minAgeRestriction) !== 'number' || body.minAgeRestriction < 1 || body.minAgeRestriction > 18 ||
         typeof (body.publicationDate) !== 'string') {
