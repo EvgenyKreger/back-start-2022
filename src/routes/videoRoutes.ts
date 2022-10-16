@@ -5,75 +5,53 @@ import {
     validateCreateVideosMiddleWare,
     validateUpdateVideosMiddleWare
 } from "../middleware/validateVideos";
+import {videoRepository} from "../repositories/video-repository";
 
 export let videos: VideoModels[] = []
 export const videoRoutes = Router()
 export const videoDeleteAllRoutes = Router()
 videoDeleteAllRoutes.delete('/', (req: Request, res: Response) => {
-    videos = []
+    videoRepository.deleteAllVideos()
     res.status(204).end()
 })
 videoRoutes.get('/', (req: Request, res: Response<VideoModels[]>) => {
-    if (videos)
+       const videos = videoRepository.getAllVideos()
         res.status(200).send(videos);
 })
 videoRoutes.get('/:id', (req: RequestWithParams<VideoUpdateIdModels>, res: Response<VideoModels>) => {
-    const idFind = +req.params.id
-    const needId = videos.find(el => el.id === idFind)
-    if(!needId){
+    const videById = videoRepository.getVideosById(+req.params.id)
+    if(!videById){
         res.status(404).end()
         return
     }
-    if (needId) {
-        res.status(200).send(needId)
+    if (videById) {
+        res.status(200).send(videById)
     }
 })
 videoRoutes.post('/', validateCreateVideosMiddleWare, (req: RequestWithBody<VideoCreateModel>, res: Response<VideoModels | {}>) => {
-    const currentTime = new Date();
-    const currentDataPlusOneDay = currentTime.setDate(currentTime.getDate() + 1);
-    const rightDataPlusOneDay = currentTime.toISOString();
-    const createObj: VideoModels = {
-        id: +new Date(),
-        title: req.body.title,
-        author: req.body.author,
-        canBeDownloaded: false,
-        minAgeRestriction: null,
-        createdAt: new Date().toISOString(),
-        publicationDate: rightDataPlusOneDay,
-        availableResolutions: req.body.availableResolutions
-    }
-    if (createObj)
-        videos.push(createObj)
-    res.status(201).send(createObj)
+   const createVideo = videoRepository.createVideo(req.body.title,req.body.author,req.body.availableResolutions)
+    res.status(201).send(createVideo)
 })
 videoRoutes.put('/:id', validateUpdateVideosMiddleWare, (req: RequestWithParamsAndBody<VideoUpdateIdModels, VideoUpdateModel>, res: Response) => {
-    const idFind = +req.params.id
-    const needId = videos.find(el => el.id === idFind)
-    if(!needId){
+   const updateVideo = videoRepository.updateVideo(+req.params.id,
+       req.body.title,req.body.author, req.body.availableResolutions,
+       req.body.canBeDownloaded,req.body.minAgeRestriction, req.body.publicationDate)
+    if(!updateVideo){
         res.status(404).end()
         return
     }
-    if (needId){
-        needId.title = req.body.title
-            needId.author = req.body.author
-            needId.availableResolutions = req.body.availableResolutions
-            needId.canBeDownloaded = req.body.canBeDownloaded
-            needId.minAgeRestriction = req.body.minAgeRestriction
-            needId.publicationDate = req.body.publicationDate
+    if (updateVideo){
         res.status(204).end()
     }
 
 })
 videoRoutes.delete('/:id',(req:RequestWithParams<VideoUpdateIdModels>, res: Response) => {
-    const idFind = +req.params.id
-    const needId = videos.find(el => el.id === idFind)
-    if(!needId){
+    const deleteVideo = videoRepository.deleteVideoById(+req.params.id)
+    if(!deleteVideo){
         res.status(404).end()
         return
     }
-    if (needId){
-        const index = videos.indexOf(needId)
-        videos.splice(index, 1)
+    if (deleteVideo){
         res.status(204).end()
     }
 
