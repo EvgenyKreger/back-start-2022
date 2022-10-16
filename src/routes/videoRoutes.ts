@@ -46,7 +46,7 @@ videoRoutes.post('/', validateCreateVideosMiddleWare, (req: RequestWithBody<Vide
         videos.push(createObj)
     res.status(201).send(createObj)
 })
-videoRoutes.put('/:id', validateUpdateVideosMiddleWare, (req: RequestWithParamsAndBody<VideoUpdateIdModels, VideoUpdateModel>, res: Response<never | {}>) => {
+videoRoutes.put('/:id', validateUpdateVideosMiddleWare, (req: RequestWithParamsAndBody<VideoUpdateIdModels, VideoUpdateModel>, res: Response) => {
     const idFind = +req.params.id
     const needId = videos.find(el => el.id === idFind)
     if(!needId){
@@ -56,6 +56,7 @@ videoRoutes.put('/:id', validateUpdateVideosMiddleWare, (req: RequestWithParamsA
     if (needId){
         needId.title = req.body.title
             needId.author = req.body.author
+            needId.availableResolutions = req.body.availableResolutions
             needId.canBeDownloaded = req.body.canBeDownloaded
             needId.minAgeRestriction = req.body.minAgeRestriction
             needId.publicationDate = req.body.publicationDate

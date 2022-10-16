@@ -76,22 +76,22 @@ export const validateUpdateVideosMiddleWare = (req: Request<VideoUpdateIdModels,
             field: "availableResolutions",
         })
     }
-    if (typeof (body.canBeDownloaded) !== 'boolean') {
+    if (!body.canBeDownloaded || typeof (body.canBeDownloaded) !== 'boolean') {
         messages.push({
             message: "canBeDownloaded can be true or false",
             field: "canBeDownloaded",
-        })
-    }
-    if (!body.publicationDate || typeof (body.publicationDate) !== 'string') {
-        messages.push({
-            message: "date time",
-            field: "publicationDate",
         })
     }
     if (!body.minAgeRestriction || typeof (body.minAgeRestriction) !== 'number' || body.minAgeRestriction < 1 || body.minAgeRestriction > 18) {
         messages.push({
             message: "min 1 max 18",
             field: "minAgeRestriction",
+        })
+    }
+    if (!body.publicationDate || typeof (body.publicationDate) !== 'string') {
+        messages.push({
+            message: "date time",
+            field: "publicationDate",
         })
     }
     if (messages.length) {
