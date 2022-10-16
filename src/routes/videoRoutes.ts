@@ -15,7 +15,7 @@ videoDeleteAllRoutes.delete('/', (req: Request, res: Response) => {
 })
 videoRoutes.get('/', (req: Request, res: Response<VideoModels[]>) => {
     if (videos)
-        res.send(videos);
+        res.status(200).send(videos);
 })
 videoRoutes.get('/:id', (req: RequestWithParams<VideoUpdateIdModels>, res: Response<VideoModels>) => {
     const idFind = +req.params.id
@@ -25,7 +25,7 @@ videoRoutes.get('/:id', (req: RequestWithParams<VideoUpdateIdModels>, res: Respo
         return
     }
     if (needId) {
-        res.send(needId)
+        res.status(200).send(needId)
     }
 })
 videoRoutes.post('/', validateCreateVideosMiddleWare, (req: RequestWithBody<VideoCreateModel>, res: Response<VideoModels | {}>) => {
